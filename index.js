@@ -81,7 +81,7 @@ client.on('message', message => {
                 });
                 collector.on('end', collected => {
                     if (collected.first() && collected.first().emoji.name == '✅') {
-                        embed.setColor("RAMDOM")
+                        embed.setColor("RANDOM")
                             .setTitle('URL이 설정(변경)되었어요')
                             .spliceFields(0, 1)
                             .addField('새 URL', `https://diko.ml/${newURL}`);
@@ -96,7 +96,7 @@ client.on('message', message => {
                         }
                         fs.writeFile('./list.json', JSON.stringify(list), () => {});
                     } else {
-                        embed.setColor("RAMDOM")
+                        embed.setColor("RANDOM")
                             .setTitle('URL 설정(변경)이 취소되었어요')
                             .spliceFields(0, 1);
                         m.edit(embed);
@@ -133,6 +133,7 @@ client.on('message', message => {
                     if (collected.first() && collected.first().emoji.name == '✅') {
                         embed.setColor("RAMDOM")
                             .setTitle('URL이 설정(변경)되었어요')
+                            .setDescription('`!remove`를 이용해 URL을 삭제하거나 `!url <커스텀 링크>`를 이용해 커스텀 링크를 만들 수 있어요!')
                             .spliceFields(0, 1)
                             .addField('새 URL', `https://diko.ml/${newURL}`);
                         m.edit(embed);
@@ -154,6 +155,52 @@ client.on('message', message => {
                 });
             });
         }
+    } else if (message.content == '!remove') {
+        if (!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('서버 관리 권한이 필요해요.');
+        if (list.urls.find(x => x.guild == message.guild.id)) return message.channel.send('이 서버에는 URL이 등록되어있지 않아요.');
+        const embed = new Discord.MessageEmbed()
+                .setTitle('URL을 삭제할까요?')
+                .setColor('RANDOM')
+                .setFooter(message.author.tag, message.author.avatarURL({
+                    dynamic: true,
+                    format: 'jpg',
+                    size: 2048
+                }))
+                .setTimestamp()
+                .setThumbnail(message.author.avatarURL({
+                    dynamic: true,
+                    format: 'jpg',
+                    size: 2048
+                }))
+            message.channel.send(embed).then(async m => {
+                await m.react('✅');
+                await m.react('❌');
+                const filter = (r, u) => u.id == message.author.id && (r.emoji.name == '✅' || r.emoji.name == '❌');
+                const collector = m.createReactionCollector(filter, {
+                    time: 30000,
+                    max: 1
+                });
+                collector.on('end', collected => {
+                    if (collected.first() && collected.first().emoji.name == '✅') {
+                        embed.setColor("RANDOM")
+                            .setTitle('URL이 삭제되었어요')
+                            .setDescription('언제든지 `!url`을 이용해 URL을 다시 설정할 수 있어요');
+                        m.edit(embed);
+                        if (list.urls.find(x => x.guild == message.guild.id)) {
+                            list.urls.splice(list.urls.indexOf({
+                                code: list.urls.find(x => x.guild == message.guild.id).code,
+                                guild: message.guild.id
+                            }), 1);
+                            fs.writeFile('./list.json', JSON.stringify(list), () => {});
+                        }
+                        fs.writeFile('./list.json', JSON.stringify(list), () => {});
+                    } else {
+                        embed.setColor("RANDOM")
+                            .setTitle('URL 삭제가 취소되었어요')
+                        m.edit(embed);
+                    }
+                });
+            });
     }
 });
 client.on('guildDelete', guild => {
