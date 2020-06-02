@@ -157,7 +157,7 @@ client.on('message', message => {
         }
     } else if (message.content == '!remove') {
         if (!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('서버 관리 권한이 필요해요.');
-        if (list.urls.find(x => x.guild == message.guild.id)) return message.channel.send('이 서버에는 URL이 등록되어있지 않아요.');
+        if (!list.urls.find(x => x.guild == message.guild.id)) return message.channel.send('이 서버에는 URL이 등록되어있지 않아요.');
         const embed = new Discord.MessageEmbed()
                 .setTitle('URL을 삭제할까요?')
                 .setColor('RANDOM')
