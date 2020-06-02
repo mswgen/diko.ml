@@ -5,6 +5,7 @@ const url = require('url');
 const fs = require('fs');
 const list = require('./list.json');
 const client = new Discord.Client();
+const axios = require('axios');
 dotenv.config({
     path: './.env'
 });
@@ -40,7 +41,10 @@ client.on('ready', () => {
                 });
                 break;
         }
-    });
+    }, 5000);
+    setInterval(() => {
+        axios.get('https://diko.ga').then();
+    }, 600000)
 });
 client.on('message', message => {
     if (message.content.startsWith('!url')) {

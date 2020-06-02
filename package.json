@@ -11,7 +11,8 @@
     "license": "MIT",
     "dependencies": {
         "discord.js": "12.2.0",
-        "dotenv": "8.2.0"
+        "dotenv": "8.2.0",
+        "axios": "0.19.2"
     },
     "repository": {
         "url": "https://github.com/mswgen/diko.ml.git",
