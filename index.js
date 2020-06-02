@@ -10,6 +10,37 @@ dotenv.config({
 });
 client.on('ready', () => {
     console.log(`Login ${client.user.username}\n---------------------`);
+    setInterval(() => {
+        switch (Math.floor(Math.random() * 3)) {
+            case 0:
+                client.user.setPresence({
+                    status: 'online',
+                    activity: {
+                        name: '!url 입력해서 초대 링크 만들기',
+                        type: 'PLAYING'
+                    }
+                });
+                break;
+            case 1:
+                client.user.setPresence({
+                    status: 'online',
+                    activity: {
+                        name: `${client.guilds.cache.size}개의 서버`,
+                        type: 'PLAYING'
+                    }
+                });
+                break;
+            case 2:
+                client.user.setPresence({
+                    status: 'online',
+                    activity: {
+                        name: `${client.users.cache.size}명의 유저`,
+                        type: 'PLAYING'
+                    }
+                });
+                break;
+        }
+    });
 });
 client.on('message', message => {
     if (message.content.startsWith('!url')) {
