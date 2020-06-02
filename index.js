@@ -83,6 +83,7 @@ client.on('message', message => {
                     if (collected.first() && collected.first().emoji.name == '✅') {
                         embed.setColor("RANDOM")
                             .setTitle('URL이 설정(변경)되었어요')
+                            .setDescription('`!remove`를 이용해 URL을 삭제하거나 `!url <커스텀 링크>`를 이용해 커스텀 링크를 만들 수 있어요!')
                             .spliceFields(0, 1)
                             .addField('새 URL', `https://diko.ml/${newURL}`);
                         m.edit(embed);
