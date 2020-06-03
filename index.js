@@ -208,7 +208,7 @@ client.on('guildCreate', guild => {
 2. 초대 링크(커스텀) 만들기: \`!url <커스텀 링크>\`
 3. url 삭제하기: \`!remove\` (봇이 서버에서 나가면 링크는 자동으로 지워져요)
 
->>**diko.ml 바로가기(봇 초대 링크): https://diko.ml**
+>>> **diko.ml 바로가기(봇 초대 링크): https://diko.ml **
 `);
 });
 client.on('guildDelete', async guild => {
