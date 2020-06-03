@@ -10,9 +10,12 @@
     },
     "license": "MIT",
     "dependencies": {
+        "axios": "0.19.2",
         "discord.js": "12.2.0",
         "dotenv": "8.2.0",
-        "axios": "0.19.2"
+        "sqlite": "^4.0.10",
+        "sqlite3": "^4.2.0",
+        "vultrex.db": "1.4.1"
     },
     "repository": {
         "url": "https://github.com/mswgen/diko.ml.git",

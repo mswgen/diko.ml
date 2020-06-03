@@ -3,9 +3,15 @@ const http = require('http');
 const dotenv = require('dotenv');
 const url = require('url');
 const fs = require('fs');
-const list = require('./list.json');
 const client = new Discord.Client();
 const axios = require('axios');
+const { VultrexDB } = require('vultrex.db');
+const db = new VultrexDB({
+    provider: 'sqlite',
+    table: 'index',
+    fileName: './db/index'
+});
+db.connect(() => console.log('DB connected'));
 dotenv.config({
     path: './.env'
 });
@@ -46,7 +52,7 @@ client.on('ready', () => {
         axios.get('https://diko.ga').then();
     }, 600000)
 });
-client.on('message', message => {
+client.on('message', async message => {
     if (message.content.startsWith('!url')) {
         if (!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('서버 관리 권한이 필요해요.');
         var args = message.content.slice(1).trim().split(' ');
@@ -79,7 +85,7 @@ client.on('message', message => {
                     time: 30000,
                     max: 1
                 });
-                collector.on('end', collected => {
+                collector.on('end', async collected => {
                     if (collected.first() && collected.first().emoji.name == '✅') {
                         embed.setColor("RANDOM")
                             .setTitle('URL이 설정(변경)되었어요')
@@ -87,15 +93,10 @@ client.on('message', message => {
                             .spliceFields(0, 1)
                             .addField('새 URL', `https://diko.ml/${newURL}`);
                         m.edit(embed);
-                        if (list.urls.find(x => x.guild == message.guild.id)) {
-                            list.urls.find(x => x.guild == message.guild.id).code = newURL;
-                        } else {
-                            list.urls.push({
-                                code: newURL,
-                                guild: message.guild.id
-                            });
+                        if ((await db.getAll()).find(x => x.value == message.guild.id)) {
+                            await db.delete((await db.getAll()).find(x => x.value == message.guild.id).key);
                         }
-                        fs.writeFile('./list.json', JSON.stringify(list), () => {});
+                        await db.set(newURL, message.guild.id);
                     } else {
                         embed.setColor("RANDOM")
                             .setTitle('URL 설정(변경)이 취소되었어요')
@@ -106,7 +107,7 @@ client.on('message', message => {
             });
         } else {
             let newURL = encodeURIComponent(args.slice(1).join(' '));
-            if (list.urls.find(x => x.code == newURL)) return message.channel.send('이미 이 URL을 누군가가 사용하고 있어요.');
+            if (await db.get(newURL)) return message.channel.send('이미 이 URL을 누군가가 사용하고 있어요.');
             const embed = new Discord.MessageEmbed()
                 .setTitle('URL을 설정(변경)할까요?')
                 .setColor('RANDOM')
@@ -130,25 +131,20 @@ client.on('message', message => {
                     time: 30000,
                     max: 1
                 });
-                collector.on('end', collected => {
+                collector.on('end', async collected => {
                     if (collected.first() && collected.first().emoji.name == '✅') {
-                        embed.setColor("RAMDOM")
+                        embed.setColor("RANDOM")
                             .setTitle('URL이 설정(변경)되었어요')
                             .setDescription('`!remove`를 이용해 URL을 삭제하거나 `!url <커스텀 링크>`를 이용해 커스텀 링크를 만들 수 있어요!')
                             .spliceFields(0, 1)
                             .addField('새 URL', `https://diko.ml/${newURL}`);
                         m.edit(embed);
-                        if (list.urls.find(x => x.guild == message.guild.id)) {
-                            list.urls.find(x => x.guild == message.guild.id).code = newURL;
-                        } else {
-                            list.urls.push({
-                                code: newURL,
-                                guild: message.guild.id
-                            });
+                        if ((await db.getAll()).find(x => x.value == message.guild.id)) {
+                            await db.delete((await db.getAll()).find(x => x.value == message.guild.id).key);
                         }
-                        fs.writeFile('./list.json', JSON.stringify(list), () => {});
+                        await db.set(newURL, message.guild.id);
                     } else {
-                        embed.setColor("RAMDOM")
+                        embed.setColor("RANDOM")
                             .setTitle('URL 설정(변경)이 취소되었어요')
                             .spliceFields(0, 1);
                         m.edit(embed);
@@ -158,7 +154,7 @@ client.on('message', message => {
         }
     } else if (message.content == '!remove') {
         if (!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('서버 관리 권한이 필요해요.');
-        if (!list.urls.find(x => x.guild == message.guild.id)) return message.channel.send('이 서버에는 URL이 등록되어있지 않아요.');
+        if (!(await db.getAll()).find(x => x.value == message.guild.id)) return message.channel.send('이 서버에는 URL이 등록되어있지 않아요.');
         const embed = new Discord.MessageEmbed()
                 .setTitle('URL을 삭제할까요?')
                 .setColor('RANDOM')
@@ -181,20 +177,13 @@ client.on('message', message => {
                     time: 30000,
                     max: 1
                 });
-                collector.on('end', collected => {
+                collector.on('end', async collected => {
                     if (collected.first() && collected.first().emoji.name == '✅') {
                         embed.setColor("RANDOM")
                             .setTitle('URL이 삭제되었어요')
                             .setDescription('언제든지 `!url`을 이용해 URL을 다시 설정할 수 있어요');
                         m.edit(embed);
-                        if (list.urls.find(x => x.guild == message.guild.id)) {
-                            list.urls.splice(list.urls.indexOf({
-                                code: list.urls.find(x => x.guild == message.guild.id).code,
-                                guild: message.guild.id
-                            }), 1);
-                            fs.writeFile('./list.json', JSON.stringify(list), () => {});
-                        }
-                        fs.writeFile('./list.json', JSON.stringify(list), () => {});
+                        await db.delete((await db.getAll()).find(x => x.value == message.guild.id).key);
                     } else {
                         embed.setColor("RANDOM")
                             .setTitle('URL 삭제가 취소되었어요')
@@ -204,24 +193,20 @@ client.on('message', message => {
             });
     }
 });
-client.on('guildDelete', guild => {
-    if (list.urls.find(x => x.guild == guild.id)) {
-        list.urls.splice(list.urls.indexOf({
-            code: list.urls.find(x => x.guild == guild.id).code,
-            guild: guild.id
-        }), 1);
-        fs.writeFile('./list.json', JSON.stringify(list), () => {});
+client.on('guildDelete', async guild => {
+    if ((await db.getAll()).find(x => x.value == guild.id)) {
+        await db.delete((await db.getAll()).find(x => x.value == guild.id).key);
     }
 });
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
     let parsed = url.parse(req.url, true);
     if (parsed.pathname == '/') {
         res.writeHead(302, {
             'Location': 'https://discord.com/api/oauth2/authorize?client_id=717307994861469766&permissions=8&scope=bot'
         });
         res.end();
-    } else if (list.urls.find(x => x.code == parsed.pathname.substr(1))) {
-            client.guilds.cache.get(list.urls.find(x => x.code == parsed.pathname.substr(1)).guild).channels.cache.filter(x => x.permissionsFor(client.user).has('CREATE_INSTANT_INVITE') && x.type == 'text').random().createInvite({
+    } else if (await db.get(parsed.pathname.substr(1))) {
+            client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).channels.cache.filter(x => x.permissionsFor(client.user).has('CREATE_INSTANT_INVITE') && x.type == 'text').random().createInvite({
                 maxAge: 0,
                 maxUses: 0
             }).then(inv => {
