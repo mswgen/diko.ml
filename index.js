@@ -18,7 +18,7 @@ dotenv.config({
 client.on('ready', () => {
     console.log(`Login ${client.user.username}\n---------------------`);
     setInterval(() => {
-        switch (Math.floor(Math.random() * 3)) {
+        switch (Math.floor(Math.random() * 4)) {
             case 0:
                 client.user.setPresence({
                     status: 'online',
@@ -42,6 +42,15 @@ client.on('ready', () => {
                     status: 'online',
                     activity: {
                         name: `${client.users.cache.size}명의 유저`,
+                        type: 'PLAYING'
+                    }
+                });
+                break;
+            case 3:
+                client.user.setPresence({
+                    status: 'online',
+                    activity: {
+                        name: `!remove 입력해 초대 링크 지우기`,
                         type: 'PLAYING'
                     }
                 });
@@ -192,6 +201,15 @@ client.on('message', async message => {
                 });
             });
     }
+});
+client.on('guildCreate', guild => {
+    guild.owner.send(`${client.user.username} 봇을 초대해 주셔서 감사해요! 봇의 사용 방법을 알려드릴게요.
+1. 초대 링크(기본) 만들기: \`!url\`
+2. 초대 링크(커스텀) 만들기: \`!url <커스텀 링크>\`
+3. url 삭제하기: \`!remove\` (봇이 서버에서 나가면 링크는 자동으로 지워져요)
+
+>>**diko.ml 바로가기(봇 초대 링크): https://diko.ml**
+`);
 });
 client.on('guildDelete', async guild => {
     if ((await db.getAll()).find(x => x.value == guild.id)) {
