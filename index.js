@@ -58,7 +58,7 @@ client.on('ready', () => {
         }
     }, 5000);
     setInterval(() => {
-        axios.get('https://diko.ga').then();
+        axios.get('https://diko.ml').then();
     }, 600000)
 });
 client.on('message', async message => {
