@@ -206,16 +206,24 @@ const server = http.createServer(async (req, res) => {
         });
         res.end();
     } else if (await db.get(parsed.pathname.substr(1))) {
-            client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).channels.cache.filter(x => x.permissionsFor(client.user).has('CREATE_INSTANT_INVITE') && x.type == 'text').random().createInvite({
-                maxAge: 0,
-                maxUses: 0
-            }).then(inv => {
-                res.writeHead(302, {
-                    'Location': inv.url
-                });
-                res.end();
+        const invites = await client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).fetchInvites();
+        if (invites.some(x => !x.temporary && x.channel.type == 'text')) {
+            res.writeHead(302, {
+                'Location': invites.filter(x => !x.temporary && x.channel.type == 'text').random().url
             });
-        } else {
+            res.end();
+            return;
+        }
+        client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).channels.cache.filter(x => x.permissionsFor(client.user).has('CREATE_INSTANT_INVITE') && x.type == 'text').random().createInvite({
+            maxAge: 0,
+            maxUses: 0
+        }).then(inv => {
+            res.writeHead(302, {
+                'Location': inv.url
+            });
+            res.end();
+        });
+    } else {
         fs.readFile('./404.html', 'utf8', (err, data) => {
             res.writeHead(404, {
                 'Content-Type': 'text/html; charset=utf-8'
