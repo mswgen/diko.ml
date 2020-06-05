@@ -199,6 +199,7 @@ client.on('message', async message => {
             .addField('!url', '서버의 url을 등록하거나 변경해요. 뒤에 커스텀 링크를 적으면 커스텀 url도 만들 수 있어요.')
             .addField('!remove', '서버의 url을 삭제해요. 언제든시 다시 등록할 수 있어요.')
             .addField('!help', '지금 이거에요!')
+            .addField('!now', '현재 이 서버의 URl을 볼 수 있어요.')
             .setFooter(message.author.tag, message.author.avatarURL({
                 dynamic: true,
                 format: 'jpg',
@@ -211,6 +212,23 @@ client.on('message', async message => {
                 size: 2048
             }))
         );
+    } else if (message.content == '!now') {
+        let x = (await db.getAll()).find(x => x.value == message.guild.id);
+        if (!x) {
+            message.channel.send('이 서버에는 url이 등록되어있지 않아요.');
+        } else {
+            message.channel.send(new Discord.MessageEmbed()
+                .setTitle(`${message.guild.name}의 url`)
+                .setDescription(`https://diko.ml/${(await db.getAll()).find(x => x.value == message.guild.id).key}`)
+                .setColor('RANDOM')
+                .setFooter(message.author.tag, message.author.avatarURL({
+                    dynamic: true,
+                    format: 'jpg',
+                    size: 2048
+                }))
+                .setTimestamp()
+            );
+        }
     }
 });
 client.on('guildCreate', guild => {
