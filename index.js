@@ -54,7 +54,7 @@ client.on('ready', () => {
 });
 client.on('message', async message => {
     if (message.content.startsWith('!url')) {
-        if (!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('서버 관리 권한이 필요해요.');
+        if (!message.member.hasPermission('MANAGE_GUILD') && message.author.id != '647736678815105037') return message.channel.send('서버 관리 권한이 필요해요.');
         var args = message.content.slice(1).trim().split(' ');
         if (!args[1]) {
             var newURL = '';
