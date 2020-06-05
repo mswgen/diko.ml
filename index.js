@@ -18,12 +18,12 @@ dotenv.config({
 client.on('ready', () => {
     console.log(`Login ${client.user.username}\n---------------------`);
     setInterval(() => {
-        switch (Math.floor(Math.random() * 4)) {
+        switch (Math.floor(Math.random() * 3)) {
             case 0:
                 client.user.setPresence({
                     status: 'online',
                     activity: {
-                        name: '!url 입력해서 초대 링크 만들기',
+                        name: '!help 입력',
                         type: 'PLAYING'
                     }
                 });
@@ -41,16 +41,7 @@ client.on('ready', () => {
                 client.user.setPresence({
                     status: 'online',
                     activity: {
-                        name: `${client.users.cache.size}명의 유저`,
-                        type: 'PLAYING'
-                    }
-                });
-                break;
-            case 3:
-                client.user.setPresence({
-                    status: 'online',
-                    activity: {
-                        name: `!remove 입력해 초대 링크 지우기`,
+                        name: `${client.users.cache.filter(x => !x.bot).size}명의 유저`,
                         type: 'PLAYING'
                     }
                 });
@@ -117,6 +108,7 @@ client.on('message', async message => {
         } else {
             let newURL = encodeURIComponent(args.slice(1).join(' '));
             if (await db.get(newURL)) return message.channel.send('이미 이 URL을 누군가가 사용하고 있어요.');
+            if (decodeURIComponent(newURL) == 'style.css') return message.channel.send('이 url은 내부 파일 때문에 사용할 수 없어요.');
             const embed = new Discord.MessageEmbed()
                 .setTitle('URL을 설정(변경)할까요?')
                 .setColor('RANDOM')
@@ -144,7 +136,7 @@ client.on('message', async message => {
                     if (collected.first() && collected.first().emoji.name == '✅') {
                         embed.setColor("RANDOM")
                             .setTitle('URL이 설정(변경)되었어요')
-                            .setDescription('`!remove`를 이용해 URL을 삭제하거나 `!url <커스텀 링크>`를 이용해 커스텀 링크를 만들 수 있어요!')
+                            .setDescription('`!remove`를 이용해 URL을 삭제할 수 있어요!')
                             .spliceFields(0, 1)
                             .addField('새 URL', `https://diko.ml/${newURL}`);
                         m.edit(embed);
@@ -200,13 +192,29 @@ client.on('message', async message => {
                     }
                 });
             });
+    } else if (message.content == '!help') {
+        message.channel.send(new Discord.MessageEmbed()
+            .setTitle(`${client.user.username} 도움말`)
+            .setColor('RANDOM')
+            .addField('!url', '서버의 url을 등록하거나 변경해요. 뒤에 커스텀 링크를 적으면 커스텀 url도 만들 수 있어요.')
+            .addField('!remove', '서버의 url을 삭제해요. 언제든시 다시 등록할 수 있어요.')
+            .addField('!help', '지금 이거에요!')
+            .setFooter(message.author.tag, message.author.avatarURL({
+                dynamic: true,
+                format: 'jpg',
+                size: 2048
+            }))
+            .setTimestamp()
+            .setThumbnail(client.user.displayAvatarURL({
+                dynamic: true,
+                format: 'jpg',
+                size: 2048
+            }))
+        );
     }
 });
 client.on('guildCreate', guild => {
-    guild.owner.send(`${client.user.username} 봇을 초대해 주셔서 감사해요! 봇의 사용 방법을 알려드릴게요.
-1. 초대 링크(기본) 만들기: \`!url\`
-2. 초대 링크(커스텀) 만들기: \`!url <커스텀 링크>\`
-3. url 삭제하기: \`!remove\` (봇이 서버에서 나가면 링크는 자동으로 지워져요)
+    guild.owner.send(`${client.user.username} 봇을 초대해 주셔서 고마워요! \`/!help\`를 입력해 도움말을 볼 수 있어요.
 
 >>> **diko.ml 바로가기(봇 초대 링크): https://diko.ml **
 `);
@@ -219,10 +227,19 @@ client.on('guildDelete', async guild => {
 const server = http.createServer(async (req, res) => {
     let parsed = url.parse(req.url, true);
     if (parsed.pathname == '/') {
-        res.writeHead(302, {
-            'Location': 'https://discord.com/api/oauth2/authorize?client_id=717307994861469766&permissions=8&scope=bot'
+        fs.readFile('./index.html', 'utf8', (err, data) => {
+            res.writeHead(200, {
+                'Content-Type': 'text/html; charset=utf-8'
+            });
+            res.end(data);
         });
-        res.end();
+    } else if (parsed.pathname == '/style.css') {
+        fs.readFile('./style.css', 'utf8', (err, data) => {
+            res.writeHead(200, {
+                'Content-Type': 'text/css; charset=utf-8'
+            });
+            res.end(data);
+        });
     } else if (await db.get(parsed.pathname.substr(1))) {
         const invites = await client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).fetchInvites();
         if (invites.some(x => !x.temporary && x.channel.type == 'text')) {

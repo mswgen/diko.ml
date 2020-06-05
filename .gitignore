@@ -354,3 +354,7 @@ MigrationBackup/
 
 # Env files
 *.env
+
+# Database files
+db/index.db
+db/
