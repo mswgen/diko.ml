@@ -255,6 +255,14 @@ client.on('guildUpdate', (_old, _new) => {
 });
 const server = http.createServer(async (req, res) => {
     let parsed = url.parse(req.url, true);
+    if (req.headers['user-agent'].indexOf("MSIE") > -1 || req.headers['user-agent'].indexOf("rv:") > -1) {
+        fs.readFile('./ie.html', 'utf8', (err, data) => {
+            res.writeHead(400, {
+                'Content-Type': 'text/html; charset=utf-8'
+            });
+            res.end(data);
+        });
+    }
     if (parsed.pathname == '/') {
         fs.readFile('./index.html', 'utf8', (err, data) => {
             res.writeHead(200, {
