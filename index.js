@@ -255,7 +255,7 @@ client.on('guildUpdate', (_old, _new) => {
 });
 const server = http.createServer(async (req, res) => {
     let parsed = url.parse(req.url, true);
-    if (req.headers['user-agent'].indexOf("MSIE") > -1 || req.headers['user-agent'].indexOf("rv:") > -1) {
+    if (req.headers['user-agent'].indexOf("MSIE") > -1 || req.headers['user-agent'].indexOf("rv:11.0") > -1) {
         fs.readFile('./ie.html', 'utf8', (err, data) => {
             res.writeHead(400, {
                 'Content-Type': 'text/html; charset=utf-8'
@@ -278,6 +278,7 @@ const server = http.createServer(async (req, res) => {
             res.end(data);
         });
     } else if (await db.get(parsed.pathname.substr(1))) {
+      if (client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).member(client.user).hasPermission('MANAGE_GUILD')) {
         const invites = await client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).fetchInvites();
         if (invites.some(x => !x.temporary && x.channel.type == 'text')) {
             res.writeHead(302, {
@@ -286,6 +287,7 @@ const server = http.createServer(async (req, res) => {
             res.end();
             return;
         }
+      }
         client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).channels.cache.filter(x => x.permissionsFor(client.user).has('CREATE_INSTANT_INVITE') && x.type == 'text').random().createInvite({
             maxAge: 0,
             maxUses: 0
