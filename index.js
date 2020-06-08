@@ -231,10 +231,10 @@ client.on('message', async message => {
         }
     }
 });
-client.on('guildCreate', guild => {
+client.on('guildCreate', async guild => {
     if (!guild.channels.cache.some(x => x.permissionsFor(client.user).has('CREATE_INSTANT_INVITE'))) {
-        guild.owner.send(`초대 링크 만들기 권한이 없어서 방금 ${guild.name}에서 나갔어요.`);
-        guild.leave();
+        await guild.owner.send(`초대 링크 만들기 권한이 없어서 방금 ${guild.name}에서 나갔어요.`);
+        await guild.leave();
         return;
     }
     guild.owner.send(`${client.user.username} 봇을 초대해 주셔서 고마워요! \`!help\`를 입력해 도움말을 볼 수 있어요.
@@ -247,10 +247,10 @@ client.on('guildDelete', async guild => {
         await db.delete((await db.getAll()).find(x => x.value == guild.id).key);
     }
 });
-client.on('guildUpdate', (_old, _new) => {
+client.on('guildUpdate', async (_old, _new) => {
     if (!_new.channels.cache.some(x => x.permissionsFor(client.user).has('CREATE_INSTANT_INVITE'))) {
-        _new.owner.send(`초대 링크 만들기 권한이 없어서 방금 ${_new.name}에서 나갔어요.`);
-        _new.leave();
+        await _new.owner.send(`초대 링크 만들기 권한이 없어서 방금 ${_new.name}에서 나갔어요.`);
+        await _new.leave();
     }
 });
 const server = http.createServer(async (req, res) => {

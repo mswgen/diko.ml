@@ -22,7 +22,34 @@
         <div id="header">
             <h2>diko.ml</h2>
             <div></div>
-            <input type='button' id="invite-top" value="봇 초대하기" onclick="
+            <input type='button' class="invite-top" value="Why diko.ml" onclick="
+            location.href = '/#why-dikoml';
+            " onkeydown="
+            return false;
+            " onmouseover="
+                this.style['border-bottom'] = '3px solid skyblue';
+            " onmouseout="
+            this.style['border-bottom'] = '1px solid skyblue';
+            ">
+            <input type='button' class="invite-top" value="사용법" onclick="
+            location.href = '/#usage';
+            " onkeydown="
+            return false;
+            " onmouseover="
+                this.style['border-bottom'] = '3px solid skyblue';
+            " onmouseout="
+            this.style['border-bottom'] = '1px solid skyblue';
+            ">
+            <input type='button' class="invite-top" value="개발자" onclick="
+            location.href = '/#devs';
+            " onkeydown="
+            return false;
+            " onmouseover="
+                this.style['border-bottom'] = '3px solid skyblue';
+            " onmouseout="
+            this.style['border-bottom'] = '1px solid skyblue';
+            ">
+            <input type='button' class="invite-top" value="봇 초대하기" onclick="
             location.href = 'https://discord.com/api/oauth2/authorize?client_id=717307994861469766&permissions=9&scope=bot';
             " onkeydown="
             return false;
@@ -32,13 +59,14 @@
             this.style['border-bottom'] = '1px solid skyblue';
             ">
         </div>
+        </div>
         <div id="main">
             <h1>새로운 Discord 초대 링크</h1>
             <p>diko.ml을 사용하면 기존보다 훨씬 간결한 무한 링크, 커스텀 링크를 무료로 쓸 수 있어요.</p>
             <p>더이상 링크가 지워져서 링크를 다시 보내거나 커스텀 링크를 쓰기 위해 서버 부스트를 하지 말아요.</p>
             <input type='button' value="봇 초대하기" onclick="location.href = 'https://discord.com/api/oauth2/authorize?client_id=717307994861469766&permissions=9&scope=bot';" onkeydown="return false;">
             <br><br><br>
-            <h1>diko.ml의 장점</h1>
+            <h1 id="why-dikoml">Why diko.ml?</h1>
             <h2>짧은 초대 링크</h2>
             <p>기존의 discord.gg/oooooo 코드 대신 훨씬 짧은 diko.ml/oooo 형식의 코드가 제공돼요</p>
             <h2>만료되지 않는 링크</h2>
@@ -46,7 +74,7 @@
             <h2>무료로 제공되는 커스텀 링크</h2>
             <p>Discord 공식 커스텀 링크는 서버 부스트 LV 3이 돼야 제공돼요. 하지만 diko.ml은 무료로 커스텀 링크가 제공돼요. 나만의 커스텀 링크를 만들어보세요.</p>
             <br><br><br>
-            <h1>diko.ml 사용 방법</h1>
+            <h1 id="usage">diko.ml 사용 방법</h1>
             <ol>
                 <li>먼저 <a id="inv-link" href="https://discord.com/api/oauth2/authorize?client_id=717307994861469766&permissions=9&scope=bot">이 링크</a>를 눌러 봇을 초대해요.</li>
                 <li>아무 채널에서나 !url을 입력해요. 커스텀 링크는 !url &lt;커스텀 링크&gt; 를 입력해요.</li>
@@ -56,7 +84,7 @@
                 <li>url을 지울 때는 !remove를 사용하거나 봇을 추방하면 돼요.</li>
             </ol>
             <br><br>
-            <h1>개발자</h1>
+            <h1 id="devs">개발자</h1>
             <div id="dev">
                 <img src="https://cdn.discordapp.com/avatars/688672545184022579/4d43671dc2265ede2b0b9c517e8d41c9.jpg?size=4096" alt="개발자 프로필" id="devimg">
                 <p>mswgen#5458</p>

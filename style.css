@@ -3,14 +3,16 @@
     position: -webkit-sticky;
     top: 0;
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto 1fr auto auto auto auto;
     background-color: #ffffff;
     border-bottom: 1px solid lightgray;
 }
-#invite-top {
+.invite-top {
     background-color: unset;
     border: unset;
     border-bottom:  1px solid skyblue;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 #inv-link {
     color: black;
