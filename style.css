@@ -39,3 +39,11 @@ h1 {
 body {
     font-family: "맑은 고딕", "Malgun Gothic", sans-serif;
 }
+@media screen and (max-width: 800px) {
+    .invite-top {
+        display: none;
+    }
+    #invitebtn-top {
+        display: block;
+    }
+}
