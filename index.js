@@ -81,7 +81,6 @@ client.on('ready', () => {
     }, 600000)
 });
 client.on('message', async message => {
-    if (!message.content.startsWith(client.config.prefix)) return;
     if (message.author.bot) return;
     if (message.channel.type != 'text') return;
     console.log(`New Message
@@ -92,7 +91,8 @@ client.on('message', async message => {
     channel: ${message.channel.name}(ID: ${message.channel.id})
     guild: ${message.guild.name}(ID: ${message.guild.id})
     -------------------------------
-    `)
+    `);
+    if (!message.content.startsWith(client.config.prefix)) return;
     message.channel.startTyping(1);
     let args = message.content.substr(client.config.prefix.length).trim().split(' ');
     if (client.commands.get(args[0])) {
