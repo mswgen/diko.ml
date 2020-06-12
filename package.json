@@ -15,7 +15,8 @@
         "dotenv": "8.2.0",
         "sqlite": "^4.0.10",
         "sqlite3": "^4.2.0",
-        "vultrex.db": "1.4.1"
+        "vultrex.db": "1.4.1",
+        "util": "0.12.3"
     },
     "repository": {
         "url": "https://github.com/mswgen/diko.ml.git",
