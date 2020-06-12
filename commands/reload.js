@@ -24,7 +24,8 @@ module.exports = {
         const list = fs.readdirSync('./commands/');
         for (let file of list) {
             try {
-                let pull = require(`./commands/${file}`);
+                delete require.cache[require.resolve(`./file`)]
+                let pull = require(`./${file}`);
                 if (pull.name && pull.run && pull.aliases) {
                     table.addRow(file, '✅');
                     for (let alias of pull.aliases) {

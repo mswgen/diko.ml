@@ -91,6 +91,7 @@ author: ${message.author.tag}(ID: ${message.author.id})
 channel: ${message.channel.name}(ID: ${message.channel.id})
 guild: ${message.guild.name}(ID: ${message.guild.id})
 -------------------------------
+-------------------------------
     `);
     if (!message.content.startsWith(client.config.prefix)) return;
     message.channel.startTyping(1);
