@@ -3,6 +3,7 @@ module.exports = {
     name: 'remove',
     aliases: ['삭제', 'delete', 'url삭제'],
     description: '현재 이 서버의 url을 지울 수 있어요.',
+    category: 'url',
     usage: '!remove',
     run: async (client, message, args, db) => {
         if (!message.member.hasPermission('MANAGE_GUILD') && message.author.id != '647736678815105037') return message.channel.send('서버 관리 권한이 필요해요.');

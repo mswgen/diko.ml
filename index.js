@@ -44,6 +44,7 @@ fs.readdir('./commands/', (err, list) => {
             continue;
         }
     }
+    console.log(table.toString());
 });
 client.on('ready', () => {
     console.log(`Login ${client.user.username}\n-------------------------------`);

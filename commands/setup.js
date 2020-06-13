@@ -3,6 +3,7 @@ module.exports = {
     name: 'setup',
     aliases: ['url', 'url설정', '설정', 'add'],
     description: '현재 이 서버의 url을 설정하거나 변경할 수 있어요.',
+    category: 'url',
     usage: '랜덤 url의 경우: !setup\n커스텀 url의 경우 !setup <커스텀 링크>',
     run: async (client, message, args, db) => {
         if (!message.member.hasPermission('MANAGE_GUILD') && message.author.id != '647736678815105037') return message.channel.send('서버 관리 권한이 필요해요.');
