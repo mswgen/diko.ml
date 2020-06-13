@@ -5,7 +5,7 @@
     display: grid;
     grid-template-columns: auto 1fr auto auto auto auto;
     background-color: #ffffff;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid #99AAB5;
 }
 .invite-top {
     background-color: unset;
@@ -22,7 +22,7 @@ h1 {
     text-align: center;
 }
 #dev {
-    border: 1px solid lightgray;
+    border: 1px solid #99AAB5;
     border-radius: 5px;
     text-align: center;
     width: 300px;
@@ -35,6 +35,10 @@ h1 {
     margin-right: auto;
     margin-left: auto;
     margin-top: 10px;
+}
+#copyright {
+    border-top: 1px solid #99AAB5;
+    margin-top: 100px;
 }
 body {
     font-family: "맑은 고딕", "Malgun Gothic", sans-serif;
