@@ -16,6 +16,7 @@ const db = new VultrexDB({
 });
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
+client.categories = new Discord.Collection();
 db.connect().then(() => {
     console.log('DB connected');
 });
@@ -27,12 +28,13 @@ fs.readdir('./commands/', (err, list) => {
     for (let file of list) {
         try {
             let pull = require(`./commands/${file}`);
-            if (pull.name && pull.run && pull.aliases) {
+            if (pull.name && pull.run && pull.aliases && pull.category) {
                 table.addRow(file, '✅');
                 for (let alias of pull.aliases) {
                     client.aliases.set(alias, pull.name);
                 }
                 client.commands.set(pull.name, pull);
+                client.categories.set(pull.category, pull.category);
             } else {
                 table.addRow(file, '❌ -> Error');
                 continue;
@@ -104,8 +106,8 @@ guild: ${message.guild.name}(ID: ${message.guild.id})
     message.channel.stopTyping(true);
 });
 client.on('guildCreate', async guild => {
-    if (!guild.channels.cache.some(x => x.permissionsFor(client.user).has('CREATE_INSTANT_INVITE'))) {
-        await guild.owner.send(`초대 링크 만들기 권한이 없어서 방금 ${guild.name}에서 나갔어요.`);
+    if (!guild.channels.cache.some(x => x.permissionsFor(client.user).has('CREATE_INSTANT_INVITE') && x.type == 'text')) {
+        await guild.owner.send(`초대 링크 만들기 권한이 없어서 방금 ${guild.name}에서 나갔어요.\n채팅 채널의 오버라이트와 저의 역할을 확인하고 다시 초대해주세요.`);
         await guild.leave();
         return;
     }
@@ -121,7 +123,7 @@ client.on('guildDelete', async guild => {
 });
 client.on('guildUpdate', async (_old, _new) => {
     if (!_new.channels.cache.some(x => x.permissionsFor(client.user).has('CREATE_INSTANT_INVITE'))) {
-        await _new.owner.send(`초대 링크 만들기 권한이 없어서 방금 ${_new.name}에서 나갔어요.`);
+        await _new.owner.send(`초대 링크 만들기 권한이 없어서 방금 ${_new.name}에서 나갔어요.\n채팅 채널의 오버라이트와 저의 역할을 확인하고 다시 초대해주세요.`);
         await _new.leave();
     }
 });

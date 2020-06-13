@@ -6,6 +6,7 @@ module.exports = {
     name: 'reload',
     aliases: ['ㄹㄹㄷ', '리로드', 'ㄱ디ㅐㅁㅇ', 'flfhem'],
     description: `봇의 모든 파일을 리로드해요.(개발자만 가능)`,
+    category: 'owner',
     usage: '!reload',
     run: async (client, message, args, db) => {
         if (!client.config.owner.includes(message.author.id)) return message.channel.send(`${client.user.username} 개발자만 사용할 수 있어요.`);

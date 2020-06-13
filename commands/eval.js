@@ -4,6 +4,7 @@ module.exports = {
     name: 'eval', 
     aliases: ['실행', 'compile', '컴파일', 'evaluate', 'ㄷㅍ미', '채ㅡㅔㅑㅣㄷ', 'ㄷㅍ미ㅕㅁㅅㄷ'],
     description: 'JavaScript 코드를 바로 실행해요.(개발자만 가능)',
+    category: 'owner',
     usage: '!eval <실행할 코드>',
     run: async (client, message, args, option) => {
         message.delete();

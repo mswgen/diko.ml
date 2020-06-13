@@ -3,6 +3,7 @@ module.exports = {
     name: 'help',
     aliases: ['도움', '도움말'],
     description: '봇의 도움말을 볼 수 있어요.',
+    category: 'other',
     usage: '전체 명령어 보기: !help\n명령어 상세보기: !help <명령어 이름>',
     run: async (client, message, args, db) => {
         if (args[1]) {
@@ -14,6 +15,7 @@ module.exports = {
                     .setTitle(cmd.name)
                     .setColor('RANDOM')
                     .addField('Aliases', cmd.aliases.map(x => `\`${x}\``).join(', '))
+                    .addField('Description', cmd.description)
                     .addField('Usage', cmd.usage)
                     .setFooter(message.author.tag, message.author.avatarURL({
                         dynamic: true,
@@ -38,7 +40,10 @@ module.exports = {
                     format: 'jpg',
                     size: 2048
                 }))
-                .setDescription(client.commands.map(x => `\`${x.name}\``).join(', '));
+                .setDescription('자세한 점보는 !help <커멘드 이름>을 입력해보세요.')
+            for (let category of client.categories.array()) {
+                embed.addField(category, client.commands.filter(x => x.category == category).map(x => `\`${x.name}\``).join(', '));
+            }
             message.channel.send(embed);
         }
     }
