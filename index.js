@@ -108,8 +108,11 @@ guild: ${message.guild.name}(ID: ${message.guild.id})
 });
 client.on('guildCreate', async guild => {
     if (!guild.channels.cache.some(x => x.permissionsFor(client.user).has('CREATE_INSTANT_INVITE') && x.type == 'text')) {
-        await guild.owner.send(`초대 링크 만들기 권한이 없어서 방금 ${guild.name}에서 나갔어요.\n채팅 채널의 오버라이트와 저의 역할을 확인하고 다시 초대해주세요.`);
-        await guild.leave();
+        guild.owner.send(`${client.user.username} 봇을 초대해 주셔서 고마워요! \`!help\`를 입력해 도움말을 볼 수 있어요.
+        **참고: 초대 링크 권한이 없어서 url 설정을 할 수 없어요. 초대 링크 권한을 주면 url을 설정할 수 있어요. (재초대 X)**
+
+>>> **diko.ml 바로가기: https://diko.ml **
+`);
         return;
     }
     guild.owner.send(`${client.user.username} 봇을 초대해 주셔서 고마워요! \`!help\`를 입력해 도움말을 볼 수 있어요.
@@ -124,8 +127,13 @@ client.on('guildDelete', async guild => {
 });
 client.on('guildUpdate', async (_old, _new) => {
     if (!_new.channels.cache.some(x => x.permissionsFor(client.user).has('CREATE_INSTANT_INVITE'))) {
-        await _new.owner.send(`초대 링크 만들기 권한이 없어서 방금 ${_new.name}에서 나갔어요.\n채팅 채널의 오버라이트와 저의 역할을 확인하고 다시 초대해주세요.`);
-        await _new.leave();
+            _new.owner.send(`초대 링크 권한이 없어서 url이 삭제되었어요. 초대 링크 권한을 주면 url을 설정할 수 있어요. (재초대 X)
+    
+>>> **diko.ml 바로가기: https://diko.ml **
+        `);
+        if ((await db.getAll()).find(x => x.value == _new.id)) {
+            await db.delete((await db.getAll()).find(x => x.value == _new.id).key);
+        }
     }
 });
 const server = http.createServer(async (req, res) => {
