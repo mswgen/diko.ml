@@ -54,7 +54,7 @@ client.on('ready', () => {
                 client.user.setPresence({
                     status: 'online',
                     activity: {
-                        name: '!help 입력',
+                        name: 'd!help 입력',
                         type: 'PLAYING'
                     }
                 });
