@@ -41,7 +41,7 @@ module.exports = {
                     format: 'jpg',
                     size: 2048
                 }))
-                .setDescription('자세한 점보는 d!help <커멘드 이름>을 입력해보세요.')
+                .setDescription('자세한 정보는 d!help <커멘드 이름>을 입력해보세요.')
             for (let category of client.categories.array()) {
                 embed.addField(category, client.commands.filter(x => x.category == category).map(x => `\`${x.name}\``).join(', '));
             }
