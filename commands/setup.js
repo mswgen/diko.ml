@@ -4,7 +4,7 @@ module.exports = {
     aliases: ['url', 'url설정', '설정', 'add'],
     description: '현재 이 서버의 url을 설정하거나 변경할 수 있어요.',
     category: 'url',
-    usage: '랜덤 url의 경우: !setup\n커스텀 url의 경우 !setup <커스텀 링크>',
+    usage: '랜덤 url의 경우: d!setup\n커스텀 url의 경우 d!setup <커스텀 링크>',
     run: async (client, message, args, db) => {
         function urlGen (length) {
             var newURL = '';

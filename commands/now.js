@@ -4,7 +4,7 @@ module.exports = {
     aliases: ['현재', '현재url'],
     description: '현재 이 서버의 url을 볼 수 있어요.',
     category: 'url',
-    usage: '!now',
+    usage: 'd!now',
     run: async (client, message, args, db) => {
         let x = (await db.getAll()).find(x => x.value == message.guild.id);
         if (!x) {
