@@ -48,7 +48,7 @@ module.exports = {
             message.channel.send(embed);
             const embed2 =  new Discord.MessageEmbed()
                 .setColor('DARK_VIVID_PINK')
-                .setDescription('[하트 누르기](https://koreanbots.dev/bots/688672545184022579)')
+                .setDescription('[하트 누르기](https://koreanbots.dev/bots/717307994861469766)')
                 .setFooter(message.author.tag, message.author.avatarURL({
                     dynamic: true,
                     format: 'jpg',
