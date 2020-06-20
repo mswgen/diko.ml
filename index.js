@@ -108,14 +108,14 @@ guild: ${message.guild.name}(ID: ${message.guild.id})
 });
 client.on('guildCreate', async guild => {
     if (!guild.channels.cache.some(x => x.permissionsFor(client.user).has('CREATE_INSTANT_INVITE') && x.type == 'text')) {
-        guild.owner.send(`${client.user.username} 봇을 초대해 주셔서 고마워요! \`!help\`를 입력해 도움말을 볼 수 있어요.
+        guild.owner.send(`${client.user.username} 봇을 초대해 주셔서 고마워요! \`d!help\`를 입력해 도움말을 볼 수 있어요.
         **참고: 초대 링크 권한이 없어서 url 설정을 할 수 없어요. 초대 링크 권한을 주면 url을 설정할 수 있어요. (재초대 X)**
 
 >>> **diko.ml 바로가기: https://diko.ml **
 `);
         return;
     }
-    guild.owner.send(`${client.user.username} 봇을 초대해 주셔서 고마워요! \`!help\`를 입력해 도움말을 볼 수 있어요.
+    guild.owner.send(`${client.user.username} 봇을 초대해 주셔서 고마워요! \`d!help\`를 입력해 도움말을 볼 수 있어요.
 
 >>> **diko.ml 바로가기: https://diko.ml **
 `);

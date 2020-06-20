@@ -35,7 +35,7 @@ module.exports = {
                 if (collected.first() && collected.first().emoji.name == '✅') {
                     embed.setColor("RANDOM")
                         .setTitle('URL이 삭제되었어요')
-                        .setDescription('언제든지 `!setup`을 이용해 URL을 다시 설정할 수 있어요');
+                        .setDescription('언제든지 `d!setup`을 이용해 URL을 다시 설정할 수 있어요');
                     m.edit(embed);
                     await db.delete((await db.getAll()).find(x => x.value == message.guild.id).key);
                 } else {
