@@ -7,7 +7,7 @@ module.exports = {
     usage: '!remove',
     run: async (client, message, args, db) => {
         if (!message.member.hasPermission('MANAGE_GUILD') && message.author.id != '647736678815105037') return message.channel.send('서버 관리 권한이 필요해요.');
-        if (!guild.channels.cache.some(x => x.permissionsFor(client.user).has('CREATE_INSTANT_INVITE') && x.type == 'text')) return message.channel.send('저에게 초대 링크 권한을 주고 다시 해보세요.');
+        if (!message.guild.channels.cache.some(x => x.permissionsFor(client.user).has('CREATE_INSTANT_INVITE') && x.type == 'text')) return message.channel.send('저에게 초대 링크 권한을 주고 다시 해보세요.');
         if (!(await db.getAll()).find(x => x.value == message.guild.id)) return message.channel.send('이 서버에는 URL이 등록되어있지 않아요.');
         const embed = new Discord.MessageEmbed()
             .setTitle('URL을 삭제할까요?')
