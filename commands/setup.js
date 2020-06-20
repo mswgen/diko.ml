@@ -12,7 +12,7 @@ module.exports = {
             for (var i = 0; i < length; i++) {
                 newURL += chars[Math.floor(Math.random() * chars.length)];
             }
-            
+            return newURL;
         }
         if (!message.member.hasPermission('MANAGE_GUILD') && message.author.id != '647736678815105037') return message.channel.send('서버 관리 권한이 필요해요.');
         if (!message.guild.channels.cache.some(x => x.permissionsFor(client.user).has('CREATE_INSTANT_INVITE') && x.type == 'text')) return message.channel.send('저에게 초대 링크 권한을 주고 다시 해보세요.');
