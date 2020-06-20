@@ -45,6 +45,27 @@ module.exports = {
                 embed.addField(category, client.commands.filter(x => x.category == category).map(x => `\`${x.name}\``).join(', '));
             }
             message.channel.send(embed);
+            const embed2 =  new Discord.MessageEmbed()
+                .setColor('DARK_VIVID_PINK')
+                .setDescription('[하트 누르기](https://koreanbots.dev/bots/688672545184022579)')
+                .setFooter(message.author.tag, message.author.avatarURL({
+                    dynamic: true,
+                    format: 'jpg',
+                    size: 2048
+                }))
+                .setTimestamp();
+            axios.get(`https://api.koreanbots.dev/bots/voted/${message.author.id}`, {
+                headers: {
+                    token: process.env.KOREANBOTS
+                }
+            }).then(res => {
+                if (res.data.voted == true) {
+                    embed2.setTitle('❤를 눌러주셔서 감사합니다!');
+                } else {
+                    embed2.setTitle('koreanbots에서 ❤를 눌러주세요!');
+                }
+                message.channel.send(embed2);
+            });
         }
     }
 }

@@ -82,6 +82,16 @@ client.on('ready', () => {
     setInterval(() => {
         axios.get('https://diko.ml').then();
     }, 600000)
+    setInterval(() => {
+        axios.post('https://api.koreanbots.dev/bots/servers', {
+            servers: client.guilds.cache.size
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                token: process.env.KOREANBOTS
+            }
+        });
+    }, 120000);
 });
 client.on('message', async message => {
     if (message.author.bot) return;
