@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const axios = require('axios').default;
 module.exports = {
     name: 'help',
     aliases: ['도움', '도움말'],
