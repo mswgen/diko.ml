@@ -178,7 +178,7 @@ const server = http.createServer(async (req, res) => {
             //     'Location': invites.filter(x => !x.temporary && x.channel.type == 'text').random().url
             // });
             // res.end();
-            fs.readFile('./assets/static/join.html', 'utf8', (err, data) => {
+            fs.readFile('./assets/static/join.html', 'utf8', async (err, data) => {
                 res.writeHead(200);
                 res.end(data
                     .replace(/{guild_name}/gi, client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).name)
