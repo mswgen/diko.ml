@@ -174,10 +174,6 @@ const server = http.createServer(async (req, res) => {
       if (client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).member(client.user).hasPermission('MANAGE_GUILD')) {
         const invites = await client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).fetchInvites();
         if (invites.some(x => !x.temporary && x.channel.type == 'text')) {
-            // res.writeHead(302, {
-            //     'Location': invites.filter(x => !x.temporary && x.channel.type == 'text').random().url
-            // });
-            // res.end();
             fs.readFile('./assets/static/join.html', 'utf8', async (err, data) => {
                 res.writeHead(200);
                 res.end(data
