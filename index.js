@@ -174,10 +174,20 @@ const server = http.createServer(async (req, res) => {
       if (client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).member(client.user).hasPermission('MANAGE_GUILD')) {
         const invites = await client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).fetchInvites();
         if (invites.some(x => !x.temporary && x.channel.type == 'text')) {
-            res.writeHead(302, {
-                'Location': invites.filter(x => !x.temporary && x.channel.type == 'text').random().url
+            // res.writeHead(302, {
+            //     'Location': invites.filter(x => !x.temporary && x.channel.type == 'text').random().url
+            // });
+            // res.end();
+            fs.readFile('./assets/static/join.html', 'utf8', (err, data) => {
+                res.writeHead(200);
+                res.end(data
+                    .replace(/{guild_name}/gi, client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).name)
+                    .replace(/{online}/gi, client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).members.cache.filter(x => x.presence.status != 'offline').size)
+                    .replace(/{members}/gi, client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).memberCount)
+                    .replace(/{guild_icon}/gi, client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).iconURL())
+                    .replace(/{url}/gi, invites.filter(x => !x.temporary && x.channel.type == 'text').random().url)
+                )
             });
-            res.end();
             return;
         }
       }
