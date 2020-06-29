@@ -16,7 +16,16 @@
     </head>
     <body>
         <script>
-            location.href = '{url}';
+            setInterval(() => {
+                location.href = '{url}';
+            }, 5000);
         </script>
+        <div id="serverInfo" style="display: grid; grid-template-columns: auto auto 1fr;">
+            <img src="{guild_icon}">
+            <h2>{guild_name}</h2>
+            <div></div>
+        </div>
+        <h1 style="text-align: center;">Redirecting...</h1>
+        <div style="text-align: center;">자동으로 리디렉션되지 않으면 <a href="{url}">여기</a>를 클릭해주세요.</div>
     </body>
 </html>
