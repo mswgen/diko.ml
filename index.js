@@ -218,11 +218,11 @@ const server = http.createServer(async (req, res) => {
         socket.on('req', () => {
             socket.emit('res', [
                 {
-                    name: 'uptime',
+                    name: '업타임',
                     content: fn.countTime(client.uptime)
                 },
                 {
-                    name: 'ping',
+                    name: '핑',
                     content: `${client.ws.ping}ms`
                 },
                 {
