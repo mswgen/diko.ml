@@ -11,7 +11,6 @@ const ascii = require('ascii-table');
 const fn = require('./functions.js');
 const table = new ascii();
 const { VultrexDB } = require('vultrex.db');
-const { openStdin } = require('process');
 const db = new VultrexDB({
     provider: 'sqlite',
     table: 'index',
@@ -75,7 +74,7 @@ client.on('ready', () => {
                 client.user.setPresence({
                     status: 'online',
                     activity: {
-                        name: `${client.users.cache.filter(x => !x.bot).size}명의 유저`,
+                        name: `${client.users.cache.size}명의 유저`,
                         type: 'PLAYING'
                     }
                 });
