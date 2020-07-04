@@ -5,10 +5,13 @@ const url = require('url');
 const fs = require('fs');
 const client = new Discord.Client();
 client.config = require('./assets/config.json');
+const os = require('os');
 const axios = require('axios');
 const ascii = require('ascii-table');
+const fn = require('./functions.js');
 const table = new ascii();
 const { VultrexDB } = require('vultrex.db');
+const { openStdin } = require('process');
 const db = new VultrexDB({
     provider: 'sqlite',
     table: 'index',
@@ -147,6 +150,7 @@ client.on('guildUpdate', async (_old, _new) => {
     }
 });
 const server = http.createServer(async (req, res) => {
+    const io = require('socket.io')(server);
     let parsed = url.parse(req.url, true);
     if (req.headers['user-agent'].indexOf("MSIE") > -1 || req.headers['user-agent'].indexOf("rv:11.0") > -1) {
         fs.readFile('./assets/static/ie.html', 'utf8', (err, data) => {
@@ -170,6 +174,8 @@ const server = http.createServer(async (req, res) => {
             });
             res.end(data);
         });
+    } else if (parsed.pathname == '/stats') {
+
     } else if (await db.get(parsed.pathname.substr(1))) {
       if (client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).member(client.user).hasPermission('MANAGE_GUILD')) {
         const invites = await client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).fetchInvites();
@@ -204,6 +210,52 @@ const server = http.createServer(async (req, res) => {
             res.end(data);
         });
     }
+    io.on('connection', socket => {
+        socket.on('req', () => {
+            socket.emit('res', [
+                {
+                    name: 'uptime',
+                    content: fn.countTime(client.uptime)
+                },
+                {
+                    name: 'ping',
+                    content: `${client.ws.ping}ms`
+                },
+                {
+                    name: 'CPU 모델',
+                    content: os.cpus()[1]
+                },
+                {
+                    name: '아키덱쳐',
+                    content: os.arch()
+                },
+                {
+                    name: 'CPU 코어 수',
+                    content: os.cpus().length
+                },
+                {
+                    name: '운영 체제',
+                    content: fn.getOs(client) || process.platform
+                },
+                {
+                    name: 'RAM 사용량',
+                    content: `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} / ${(os.totalmem() / 1024 / 1024).toFixed(2)}MB`
+                },
+                {
+                    name: '서버 수',
+                    content: `${client.guilds.cache.size}개`
+                },
+                {
+                    name: '유저 수',
+                    content: `${client.users.cache.size}명`
+                },
+                {
+                    name: '채널 수',
+                    content: `${client.channels.cache.size}개(채팅 채널 ${client.channels.cache.filter(x => x.type == 'text').size}개, 음성 채널 ${client.channels.cache.filter(x => x.type == 'voice').size}개)`
+                }
+            ]);
+        });
+    });
 });
 client.login(process.env.TOKEN);
 server.listen(4000);
