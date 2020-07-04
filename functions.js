@@ -174,9 +174,9 @@
     },
     getOs: function (client) {
         const os2 = {
-            win32: `${client.emojis.cache.find(x => x.name == 'windows_logo')} Windows`,
-            linux: `${client.emojis.cache.find(x => x.name == 'linux')} Linux`,
-            darwin:`${client.emojis.cache.find(x => x.name == 'mac')} Mac`
+            win32: `Windows`,
+            linux: `Linux`,
+            darwin:`Mac`
         }
         return os2[process.platform];
     }

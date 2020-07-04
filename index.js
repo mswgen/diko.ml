@@ -228,7 +228,7 @@ const server = http.createServer(async (req, res) => {
                 },
                 {
                     name: 'CPU 모델',
-                    content: os.cpus()[1]
+                    content: os.cpus()[1].model
                 },
                 {
                     name: '아키덱쳐',
