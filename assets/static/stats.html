@@ -20,15 +20,15 @@
     </head>
     <body>
         <h1>diko.ml 상태</h1>
-        <p>상태는 5초마다 업데이트돼요.</p>
-        <div id="stat"></div>
+        <p>상태는 3초마다 업데이트돼요.</p>
+        <div id="stat"><h1 style="text-align: center;">Loading...</h1></div>
     </body>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io();
         setInterval(() => {
             socket.emit('req');
-        }, 5000);
+        }, 3000);
         socket.on('res', res => {
             let str = '';
             for (let x of res) {

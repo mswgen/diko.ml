@@ -175,7 +175,12 @@ const server = http.createServer(async (req, res) => {
             res.end(data);
         });
     } else if (parsed.pathname == '/stats') {
-
+        fs.readFile('./assets/static/stats.html', 'utf8', (err, data) => {
+            res.writeHead(200, {
+                'Content-Type': 'text/html; charset=utf-8'
+            });
+            res.end(data);
+        })
     } else if (await db.get(parsed.pathname.substr(1))) {
       if (client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).member(client.user).hasPermission('MANAGE_GUILD')) {
         const invites = await client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).fetchInvites();
