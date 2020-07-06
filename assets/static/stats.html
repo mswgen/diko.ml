@@ -28,7 +28,7 @@
         var socket = io();
         setInterval(() => {
             socket.emit('req');
-        }, 3000);
+        }, 1000);
         socket.on('res', res => {
             let str = '';
             for (let x of res) {
