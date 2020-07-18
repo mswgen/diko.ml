@@ -10,6 +10,7 @@ const axios = require('axios');
 const ascii = require('ascii-table');
 const fn = require('./functions.js');
 const table = new ascii();
+const colorthief = require('colorthief');
 const { VultrexDB } = require('vultrex.db');
 const db = new VultrexDB({
     provider: 'sqlite',
@@ -206,10 +207,16 @@ const server = http.createServer(async (req, res) => {
             maxAge: 0,
             maxUses: 0
         }).then(inv => {
-            res.writeHead(302, {
-                'Location': inv.url
+            rfs.readFile('./assets/static/join.html', 'utf8', async (err, data) => {
+                res.writeHead(200);
+                res.end(data
+                    .replace(/{guild_name}/gi, client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).name)
+                    .replace(/{online}/gi, client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).members.cache.filter(x => x.presence.status != 'offline').size)
+                    .replace(/{members}/gi, client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).memberCount)
+                    .replace(/{guild_icon}/gi, client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).iconURL())
+                    .replace(/{url}/gi, inv.url)
+                )
             });
-            res.end();
         });
     } else {
         fs.readFile('./assets/static/404.html', 'utf8', (err, data) => {
