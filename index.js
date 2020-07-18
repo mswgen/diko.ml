@@ -211,7 +211,7 @@ const server = http.createServer(async (req, res) => {
                     .replace(/{members}/gi, client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).memberCount)
                     .replace(/{guild_icon}/gi, client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).iconURL())
                     .replace(/{url}/gi, invites.filter(x => !x.temporary && x.channel.type == 'text').random().url)
-                    .replace('{color}', rgbToHex(color[0], color[1], color[2]))
+                    .replace(/{color}/gi, rgbToHex(color[0], color[1], color[2]))
                 );
             });
             return;
@@ -229,7 +229,7 @@ const server = http.createServer(async (req, res) => {
                     .replace(/{members}/gi, client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).memberCount)
                     .replace(/{guild_icon}/gi, client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).iconURL())
                     .replace(/{url}/gi, inv.url)
-                    .replace('{color}', rgbToHex(color[0], color[1], color[2]))
+                    .replace(/{color}/gi, rgbToHex(color[0], color[1], color[2]))
                 )
             });
         });
