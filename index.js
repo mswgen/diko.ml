@@ -196,7 +196,7 @@ const server = http.createServer(async (req, res) => {
     } else if (await db.get(parsed.pathname.substr(1))) {
       let color;
       if (client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).iconURL()) {
-        color = await colorthief.getColor(client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).iconURL(), 10);
+        color = await colorthief.getColor(client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).iconURL({format: 'png'}), 10);
       } else {
         color = [72, 89, 218];
       }
