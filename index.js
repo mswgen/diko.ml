@@ -20,6 +20,13 @@ const db = new VultrexDB({
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 client.categories = new Discord.Collection();
+function componentToHex (c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+function rgbToHex (r, g, b) {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
 db.connect().then(() => {
     console.log('DB connected');
 });
@@ -187,6 +194,12 @@ const server = http.createServer(async (req, res) => {
             res.end(data);
         });
     } else if (await db.get(parsed.pathname.substr(1))) {
+      let color;
+      if (client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).iconURL()) {
+        color = await colorthief.getColor(client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).iconURL(), 10);
+      } else {
+        color = [72, 89, 218];
+      }
       if (client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).member(client.user).hasPermission('MANAGE_GUILD')) {
         const invites = await client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).fetchInvites();
         if (invites.some(x => !x.temporary && x.channel.type == 'text')) {
@@ -198,7 +211,8 @@ const server = http.createServer(async (req, res) => {
                     .replace(/{members}/gi, client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).memberCount)
                     .replace(/{guild_icon}/gi, client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).iconURL())
                     .replace(/{url}/gi, invites.filter(x => !x.temporary && x.channel.type == 'text').random().url)
-                )
+                    .replace('{color}', rgbToHex(color[0], color[1], color[2]))
+                );
             });
             return;
         }
@@ -207,7 +221,7 @@ const server = http.createServer(async (req, res) => {
             maxAge: 0,
             maxUses: 0
         }).then(inv => {
-            rfs.readFile('./assets/static/join.html', 'utf8', async (err, data) => {
+            fs.readFile('./assets/static/join.html', 'utf8', async (err, data) => {
                 res.writeHead(200);
                 res.end(data
                     .replace(/{guild_name}/gi, client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).name)
@@ -215,6 +229,7 @@ const server = http.createServer(async (req, res) => {
                     .replace(/{members}/gi, client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).memberCount)
                     .replace(/{guild_icon}/gi, client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).iconURL())
                     .replace(/{url}/gi, inv.url)
+                    .replace('{color}', rgbToHex(color[0], color[1], color[2]))
                 )
             });
         });
