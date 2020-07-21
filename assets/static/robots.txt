@@ -1,0 +1,4 @@
+User-agent: *
+allow: /
+allow: /amp
+allow: /stats
