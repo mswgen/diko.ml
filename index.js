@@ -201,7 +201,7 @@ const server = http.createServer(async (req, res) => {
             res.end(data);
         });
     } else if (parsed.pathname == '/sitemap.xml') {
-        fs.readFile('./asses/static/sitemap.xml', 'utf8', (err, data) => {
+        fs.readFile('./assets/static/sitemap.xml', 'utf8', (err, data) => {
             res.writeHead(200, {
                 'Content-Type': 'application/xml; charset=utf-8'
             });
