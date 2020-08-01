@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+	<loc>https://diko.ml/</loc>
+	<lastmod>2019-08-26T11:16:53+09:00</lastmod>
+	<changefreq>daily</changefreq>
+	<priority>1.0</priority>
+  </url>
+  <url>
+	<loc>https://diko.ml/stats</loc>
+	<lastmod>2019-08-26T11:16:53+09:00</lastmod>
+	<changefreq>daily</changefreq>
+	<priority>0.8</priority>
+  </url>
+  <url>
+	<loc>https://diko.ml/amp</loc>
+	<lastmod>2019-08-26T11:16:53+09:00</lastmod>
+	<changefreq>daily</changefreq>
+	<priority>0.9</priority>
+  </url>  
+</urlset>

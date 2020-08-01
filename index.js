@@ -200,6 +200,13 @@ const server = http.createServer(async (req, res) => {
             });
             res.end(data);
         });
+    } else if (parsed.pathname == '/sitemap.xml') {
+        fs.readFile('./asses/static/sitemap.xml', 'utf8', (err, data) => {
+            res.writeHead(200, {
+                'Content-Type': 'application/xml; charset=utf-8'
+            });
+            res.end(data);
+        })
     } else if (await db.get(parsed.pathname.substr(1))) {
       let color;
       if (client.guilds.cache.get(await db.get(parsed.pathname.substr(1))).iconURL()) {
