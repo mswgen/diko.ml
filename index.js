@@ -3,6 +3,7 @@ const https = require('https');
 const dotenv = require('dotenv');
 const url = require('url');
 const fs = require('fs');
+const crypto = require('crypto');
 const client = new Discord.Client();
 client.config = require('./assets/config.json');
 const os = require('os');
