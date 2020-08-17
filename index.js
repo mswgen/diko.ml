@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const https = require('https');
+const http = require('http');
 const dotenv = require('dotenv');
 const url = require('url');
 const fs = require('fs');
@@ -28,6 +28,7 @@ function componentToHex (c) {
 function rgbToHex (r, g, b) {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
+/*
 function decrypt(text) {
     let iv = Buffer.from(text.iv, 'hex');
     let encryptedText = Buffer.from(text.encryptedData, 'hex');
@@ -36,6 +37,7 @@ function decrypt(text) {
     decrypted = Buffer.concat([decrypted, decipher.final()]);
     return decrypted.toString();
    }
+   */
 db.connect().then(() => {
     console.log('DB connected');
 });
@@ -165,13 +167,13 @@ client.on('guildUpdate', async (_old, _new) => {
         }
     }
 });
-const server = https.createServer({
+const server = http.createServer(/*{
     key: decrypt({
         iv: process.env.CERTIFICATE,
         encryptedData: fs.readFileSync('./key.pem')
     }),
     cert: fs.readFileSync('./cert.pem')
-}, async (req, res) => {
+}, */async (req, res) => {
     const io = require('socket.io')(server);
     let parsed = url.parse(req.url, true);
     if (req.headers['user-agent'].indexOf("MSIE") > -1 || req.headers['user-agent'].indexOf("rv:11.0") > -1) {
