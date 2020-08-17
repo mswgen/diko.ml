@@ -31,7 +31,7 @@ function rgbToHex (r, g, b) {
 function decrypt(text) {
     let iv = Buffer.from(text.iv, 'hex');
     let encryptedText = Buffer.from(text.encryptedData, 'hex');
-    let decipher = crypto.createDecipheriv('aes-256-ctr', Buffer.from(key), iv);
+    let decipher = crypto.createDecipheriv('aes-256-ctr', Buffer.from(process.env.CERTKEY, 'base64'), iv);
     let decrypted = decipher.update(encryptedText);
     decrypted = Buffer.concat([decrypted, decipher.final()]);
     return decrypted.toString();
