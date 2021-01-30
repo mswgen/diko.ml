@@ -100,10 +100,10 @@ module.exports = {
                             .spliceFields(0, 1)
                             .addField('새 URL', `https://diko.ml/${newURL}`);
                         m.edit(embed);
-                        if ((await db.findOne({_id: message.guild.id}))) {
-                            await db.deleteOne({_id: message.guild.id});
+                        if ((await client.db.findOne({_id: message.guild.id}))) {
+                            await client.db.deleteOne({_id: message.guild.id});
                         }
-                        await db.insertOne({_id: message.guild.id, url: newURL});
+                        await client.db.insertOne({_id: message.guild.id, url: newURL});
                     } else {
                         embed.setColor("RANDOM")
                             .setTitle('URL 설정(변경)이 취소되었어요')
