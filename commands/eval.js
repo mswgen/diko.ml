@@ -6,7 +6,7 @@ module.exports = {
     description: 'JavaScript 코드를 바로 실행해요.(개발자만 가능)',
     category: 'owner',
     usage: 'd!eval <실행할 코드>',
-    run: async (client, message, args, db) => {
+    run: async (client, message, args) => {
         message.delete();
         if (!client.config.owner.includes(message.author.id)) return message.channel.send(`${client.user.username} 개발자만 사용할 수 있어요.`);
         let input = args.slice(1).join(' ');

@@ -5,7 +5,7 @@ module.exports = {
     description: '현재 봇의 핑을 보여줘요.',
     category: 'info',
     usage: 'd!ping',
-    run: async (client, message, args, db) => {
+    run: async (client, message, args) => {
         const embed = new Discord.MessageEmbed()
             .setTitle('Pinging...')
             .setColor('RANDOM')

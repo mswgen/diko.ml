@@ -5,10 +5,10 @@ module.exports = {
     description: '현재 이 서버의 url을 지울 수 있어요.',
     category: 'url',
     usage: 'd!remove',
-    run: async (client, message, args, db) => {
+    run: async (client, message, args) => {
         if (!message.member.hasPermission('MANAGE_GUILD') && message.author.id != '647736678815105037') return message.channel.send('서버 관리 권한이 필요해요.');
         if (!message.guild.channels.cache.some(x => x.permissionsFor(client.user).has('CREATE_INSTANT_INVITE') && x.type == 'text')) return message.channel.send('저에게 초대 링크 권한을 주고 다시 해보세요.');
-        if (!(await db.getAll()).find(x => x.value == message.guild.id)) return message.channel.send('이 서버에는 URL이 등록되어있지 않아요.');
+        if (!(await client.db.findOne({_id: message.guild.id}))) return message.channel.send('이 서버에는 URL이 등록되어있지 않아요.');
         const embed = new Discord.MessageEmbed()
             .setTitle('URL을 삭제할까요?')
             .setColor('RANDOM')
@@ -37,7 +37,7 @@ module.exports = {
                         .setTitle('URL이 삭제되었어요')
                         .setDescription('언제든지 `d!setup`을 이용해 URL을 다시 설정할 수 있어요');
                     m.edit(embed);
-                    await db.delete((await db.getAll()).find(x => x.value == message.guild.id).key);
+                    await client.db.deleteOne({_id: message.guild.id});
                 } else {
                     embed.setColor("RANDOM")
                         .setTitle('URL 삭제가 취소되었어요')

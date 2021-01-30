@@ -8,7 +8,7 @@ module.exports = {
     description: `봇의 모든 파일을 리로드해요.(개발자만 가능)`,
     category: 'owner',
     usage: 'd!reload',
-    run: async (client, message, args, db) => {
+    run: async (client, message, args) => {
         if (!client.config.owner.includes(message.author.id)) return message.channel.send(`${client.user.username} 개발자만 사용할 수 있어요.`);
         const embed = new Discord.MessageEmbed()
             .setTitle(`${client.emojis.cache.find(x => x.name == 'loading')} ${client.user.username}의 파일을 리로드 중...(${client.commands.size}개)`)

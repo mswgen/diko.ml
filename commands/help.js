@@ -6,7 +6,7 @@ module.exports = {
     description: '봇의 도움말을 볼 수 있어요.',
     category: 'other',
     usage: '전체 명령어 보기: d!help\n명령어 상세보기: d!help <명령어 이름>',
-    run: async (client, message, args, db) => {
+    run: async (client, message, args) => {
         if (args[1]) {
             let cmd = client.commands.get(args[1]);
             if (!cmd) {

@@ -5,7 +5,7 @@ module.exports = {
     description: '현재 이 서버의 url을 설정하거나 변경할 수 있어요.',
     category: 'url',
     usage: '랜덤 url의 경우: d!setup\n커스텀 url의 경우 d!setup <커스텀 링크>',
-    run: async (client, message, args, db) => {
+    run: async (client, message, args) => {
         function urlGen (length) {
             var newURL = '';
             let chars = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
@@ -20,7 +20,7 @@ module.exports = {
             var newURL = '';
             while (true) {
                 newURL = urlGen(4);
-                if (!await db.get(newURL)) break;
+                if (!await client.db.findOne({url: newURL})) break;
             }
             const embed = new Discord.MessageEmbed()
                 .setTitle('URL을 설정(변경)할까요?')
@@ -53,10 +53,10 @@ module.exports = {
                             .spliceFields(0, 1)
                             .addField('새 URL', `https://diko.ml/${newURL}`);
                         m.edit(embed);
-                        if ((await db.getAll()).find(x => x.value == message.guild.id)) {
-                            await db.delete((await db.getAll()).find(x => x.value == message.guild.id).key);
+                        if ((await db.findOne({_id: message.guild.id}))) {
+                            await db.deleteOne({_id: message.guild.id});
                         }
-                        await db.set(newURL, message.guild.id);
+                        await db.insertOne({_id: message.guild.id, url: newURL});
                     } else {
                         embed.setColor("RANDOM")
                             .setTitle('URL 설정(변경)이 취소되었어요')
@@ -67,7 +67,7 @@ module.exports = {
             });
         } else {
             let newURL = encodeURIComponent(args.slice(1).join(' '));
-            if (await db.get(newURL)) return message.channel.send('이미 이 URL을 누군가가 사용하고 있어요.');
+            if (await db.findOne({url: newURL})) return message.channel.send('이미 이 URL을 누군가가 사용하고 있어요.');
             if (decodeURIComponent(newURL).includes('style.css') || decodeURIComponent(newURL).includes('stats') || decodeURIComponent(newURL).includes('amp') || decodeURIComponent(newURL).includes('robots.txt')) return message.channel.send('이 url은 내부 파일 때문에 사용할 수 없어요.');
             const embed = new Discord.MessageEmbed()
                 .setTitle('URL을 설정(변경)할까요?')
@@ -100,10 +100,10 @@ module.exports = {
                             .spliceFields(0, 1)
                             .addField('새 URL', `https://diko.ml/${newURL}`);
                         m.edit(embed);
-                        if ((await db.getAll()).find(x => x.value == message.guild.id)) {
-                            await db.delete((await db.getAll()).find(x => x.value == message.guild.id).key);
+                        if ((await db.findOne({_id: message.guild.id}))) {
+                            await db.deleteOne({_id: message.guild.id});
                         }
-                        await db.set(newURL, message.guild.id);
+                        await db.insertOne({_id: message.guild.id, url: newURL});
                     } else {
                         embed.setColor("RANDOM")
                             .setTitle('URL 설정(변경)이 취소되었어요')
