@@ -140,17 +140,6 @@ client.on('guildDelete', async guild => {
         await client.db.deleteOne({_id: guild.id});
     }
 });
-client.on('guildUpdate', async (_old, _new) => {
-    if (!_new.channels.cache.some(x => x.permissionsFor(client.user).has('CREATE_INSTANT_INVITE'))) {
-            _new.owner.send(`초대 링크 권한이 없어서 url이 삭제되었어요. 초대 링크 권한을 주면 url을 설정할 수 있어요. (재초대 X)
-    
->>> **diko.ml 바로가기: https://diko.ml **
-        `);
-        if ((await client.db.findOne({_id: _new.id}))) {
-            await client.db.deleteOne({_id: _new.id});
-        }
-    }
-});
 const server = http.createServer(/*{
     key: decrypt({
         iv: process.env.CERTIFICATE,
