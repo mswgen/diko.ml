@@ -10,6 +10,7 @@
     },
     "license": "MIT",
     "dependencies": {
+        "ascii-table": "0.0.9",
         "axios": "^0.21.1",
         "colorthief": "2.3.2",
         "discord.js": "12.2.0",
