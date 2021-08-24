@@ -20,7 +20,7 @@
         <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
         <title>diko.ml - 새로운 Discord 초대 링크</title>
         <style amp-custom>
-            #header {
+            header {
     position: sticky;
     position: -webkit-sticky;
     top: 0;
@@ -40,26 +40,10 @@
     color: black;
     text-decoration-line: none;
 }
-h1 {
+h1 h2 {
     text-align: center;
 }
-#dev {
-    border: 1px solid #99AAB5;
-    border-radius: 5px;
-    text-align: center;
-    width: 300px;
-    height: 350px;
-    display: grid;
-    grid-template-rows: 1fr auto;
-}
-#devimg {
-    width: 80%;
-    height: 80%;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 10px;
-}
-#copyright {
+footer {
     border-top: 1px solid #99AAB5;
     margin-top: 100px;
 }
@@ -72,7 +56,7 @@ h1 {
     font-size: smaller;
 }
 body {
-    font-family: "맑은 고딕", "Malgun Gothic", sans-serif;
+    font-family: -apple-system, "Apple SD Gothic Neo", Ubuntu, "Helvetica Neue", "Noto Sans KR", "맑은 고딕", "Malgun Gothic", sans-serif;
 }
 @media screen and (max-width: 800px) {
     .invite-top {
@@ -82,54 +66,53 @@ body {
         display: block;
     }
 }
+a:visited {
+    color: black;
+    text-decoration-line: none;
+}
         </style>
         <link rel="icon" href="https://discord.com/assets/07dca80a102d4149e9736d4b162cff6f.ico">
     </head>
     <body>
-        <div id="header">
+        <header>
             <h2>diko.ml</h2>
             <div></div>
-            <a class="invite-top" id="invitebtn-top" href="https://discord.com/api/oauth2/authorize?client_id=717307994861469766&permissions=9&scope=bot">봇 초대하기</a>
-        </div>
-        </div>
-        <div id="main">
+            <a class="invite-top" id="invitebtn-top" href="https://discord.com/api/oauth2/authorize?client_id=717307994861469766&permissions=173946489921&scope=bot%20applications.commands">봇 초대하기</a>
+        </header>
+        <main>
             <h1>새로운 Discord 초대 링크</h1>
             <p>diko.ml을 사용하면 기존보다 훨씬 간결한 무한 링크, 커스텀 링크를 무료로 쓸 수 있어요.</p>
             <p>더이상 링크가 지워져서 링크를 다시 보내거나 커스텀 링크를 쓰기 위해 서버 부스트를 하지 말아요.</p>
-            <form action="https://discord.com/oauth2/authorize?client_id=717307994861469766&permissions=9&scope=bot" target="_top">
+            <form action="https://discord.com/api/oauth2/authorize?client_id=717307994861469766&permissions=173946489921&scope=bot%20applications.commands" target="_top">
                 <input type='submit' id="inv-btn" value="봇 초대하기">
                 <input type="hidden" name="client_id" value="717307994861469766">
                 <input type="hidden" name="permissions" value="9">
                 <input type="hidden" name="scope" value="bot">
             </form>
             <br><br><br>
-            <h1 id="why-dikoml">Why diko.ml?</h1>
-            <h2>짧은 초대 링크</h2>
+            <h2 id="why-dikoml">Why diko.ml?</h2>
+            <h3>짧은 초대 링크</h3>
             <p>기존의 discord.gg/oooooo 코드 대신 훨씬 짧은 diko.ml/oooo 형식의 코드가 제공돼요</p>
-            <h2>만료되지 않는 링크</h2>
+            <h3>만료되지 않는 링크</h3>
             <p>봇을 추방/차단하거나 초대링크를 변경, 삭제하지 않는 한 초대링크는 유저가 diko.ml 링크로 접속할 때마다 만들어져요. 더이상 초대 링크가 만료됐다고 링크를 바꾸지 말아요.</p>
-            <h2>무료로 제공되는 커스텀 링크</h2>
+            <h3>무료로 제공되는 커스텀 링크</h3>
             <p>Discord 공식 커스텀 링크는 서버 부스트 LV 3이 돼야 제공돼요. 하지만 diko.ml은 무료로 커스텀 링크가 제공돼요. 나만의 커스텀 링크를 만들어보세요.</p>
             <br><br><br>
-            <h1 id="usage">diko.ml 사용 방법</h1>
+            <h2 id="usage">diko.ml 사용 방법</h2>
             <ol>
-                <li>먼저 <a id="inv-link" href="https://discord.com/api/oauth2/authorize?client_id=717307994861469766&permissions=9&scope=bot">이 링크</a>를 눌러 봇을 초대해요.</li>
-                <li>아무 채널에서나 d!setup을 입력해요. 커스텀 링크는 d!setup &lt;커스텀 링크&gt; 를 입력해요.</li>
-                <li>봇이 메세지를 보내면 ✅를 눌러요.</li>
+                <li>먼저 <a id="inv-link" href="https://discord.com/api/oauth2/authorize?client_id=717307994861469766&permissions=173946489921&scope=bot%20applications.commands">이 링크</a>를 눌러 봇을 초대해요.</li>
+                <li>아무 채널에서나 /setup을 입력해요. 커스텀 링크는 /setup &lt;커스텀 링크&gt; 를 입력해요.</li>
+                <li>봇이 메세지를 보내면 확인 버튼을 눌러요.</li>
                 <li>url 설정이 완료되었어요! 해당 url로 들어가보세요.</li>
                 <li>url을 바꿀 때도 같은 방법을 쓰면 돼요.</li>
-                <li>url을 지울 때는 d!remove를 사용하거나 봇을 추방하면 돼요.</li>
+                <li>url을 지울 때는 /remove를 사용하거나 봇을 추방하면 돼요.</li>
             </ol>
             <br><br>
-            <h1 id="devs">개발자</h1>
-            <div id="dev">
-                <amp-img src="https://cdn.discordapp.com/avatars/688672545184022579/4d43671dc2265ede2b0b9c517e8d41c9.jpg?size=4096" alt="개발자 프로필" id="devimg" width="240" height="240" layout="responsive"></amp-img>
-                <p>mswgen#0890</p>
-            </div>
-            <div id="copyright">
-                <h3>diko.ml</h3>
-                <p>copyright © 2020 mswgen#0890, All rights reserved.</p>
-            </div>
-        </div>
+        </main>
+        <footer>
+            <h4>diko.ml</h4>
+            <p>copyright © 2020 mswgen#0890, All rights reserved.</p>
+            <a href="https://github.com/mswgen/diko.ml">View Source on GitHub</a>
+        </footer>
     </body>
 </html>

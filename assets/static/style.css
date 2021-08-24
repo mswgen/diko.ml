@@ -1,4 +1,4 @@
-#header {
+header {
     position: sticky;
     position: -webkit-sticky;
     top: 0;
@@ -18,30 +18,15 @@
     color: black;
     text-decoration-line: none;
 }
-h1 {
+h1 h2 {
     text-align: center;
 }
-#dev {
-    border: 1px solid #99AAB5;
-    border-radius: 5px;
-    text-align: center;
-    width: 300px;
-    height: 350px;
-    display: grid;
-    grid-template-rows: 1fr auto;
-}
-#devimg {
-    width: 80%;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 10px;
-}
-#copyright {
+footer {
     border-top: 1px solid #99AAB5;
     margin-top: 100px;
 }
 body {
-    font-family: "맑은 고딕", "Malgun Gothic", sans-serif;
+    font-family: -apple-system, "Apple SD Gothic Neo", Ubuntu, "Helvetica Neue", "Noto Sans KR", "맑은 고딕", "Malgun Gothic", sans-serif;
 }
 @media screen and (max-width: 800px) {
     .invite-top {
@@ -50,4 +35,8 @@ body {
     #invitebtn-top {
         display: block;
     }
+}
+a:visited {
+    color: black;
+    text-decoration-line: none;
 }
