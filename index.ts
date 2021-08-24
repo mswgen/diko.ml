@@ -83,7 +83,7 @@ client.on('ready', () => {
         axios.get('https://diko.ml').then();
     }, 600000)
     setInterval(() => {
-        axios.post('https://api.koreanbots.dev/bots/servers', {
+        axios.post(`https://koreanbots.dev/api/v2/bots/${client.user!.id}/stats`, {
             servers: client.guilds.cache.size
         }, {
             headers: {
