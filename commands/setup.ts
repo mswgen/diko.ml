@@ -32,7 +32,7 @@ export default {
                 }
             })
         }
-        if (!interaction.data.options.find((x: any) => x.name == 'url')) {
+        if (!interaction.data.options || !interaction.data.options.find((x: any) => x.name == 'url')) {
             let newURL = '';
             while (true) {
                 newURL = urlGen(4);
