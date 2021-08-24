@@ -11,7 +11,7 @@ import ascii from 'ascii-table';
 import functions from './functions.js';
 const table = new ascii();
 import colorthief from 'colorthief';
-import mongodb from 'mongodb';
+import * as mongodb from 'mongodb';
 import socketio from 'socket.io';
 const DBClient = new mongodb.MongoClient(`mongodb+srv://user:${process.env.DB_PASS}@dikoml.3ietb.mongodb.net/dikoml?retryWrites=true&w=majority`);
 client.commands = new Discord.Collection();
