@@ -88,7 +88,7 @@ client.on('ready', () => {
         }, {
             headers: {
                 'Content-Type': 'application/json',
-                token: process.env.KOREANBOTS
+                Authorization: process.env.KOREANBOTS
             }
         });
     }, 120000);
