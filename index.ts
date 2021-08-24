@@ -28,7 +28,7 @@ function rgbToHex (r: number, g: number, b: number) {
 }
 dotenv.config();
 table.setHeading('Command', 'Load Status');
-fs.readdir('./commands/', (err, list) => {
+fs.readdir('./dist/commands/', (err, list) => {
     for (let file of list.filter(x => x.endsWith('.js'))) {
         try {
             let pull = require(`./commands/${file}`).default;
