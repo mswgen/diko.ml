@@ -80,7 +80,7 @@ export default {
                             .setTitle('URL이 설정(변경)되었어요')
                             .setDescription('언제든지 `/remove`을 이용해 URL을 삭제할 수 있어요')
                             .spliceFields(0, 1)
-                            .addField('새 URL', newURL);
+                            .addField('새 URL', `https://diko.ml/${newURL}`);
                         await axios.patch(`https://discord.com/api/v9/webhooks/${interaction.application_id}/${interaction.token}/messages/${prompt.data.id}`, {
                             embeds: [embed]
                         }, {
@@ -170,7 +170,7 @@ export default {
                             .setTitle('URL이 설정(변경)되었어요')
                             .setDescription('언제든지 `/remove`을 이용해 URL을 삭제할 수 있어요')
                             .spliceFields(0, 1)
-                            .addField('새 URL', newURL);
+                            .addField('새 URL', `https://diko.ml/${newURL}`);
                         await axios.patch(`https://discord.com/api/v9/webhooks/${interaction.application_id}/${interaction.token}/messages/${prompt.data.id}`, {
                             embeds: [embed]
                         }, {
