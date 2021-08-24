@@ -177,6 +177,7 @@ const server = http.createServer(async (req, res) => {
                     .replace(/{guild_icon}/gi, client.guilds.cache.get((await client.db!.findOne({url: parsed.pathname!.substr(1)}))._id)!.iconURL() || `https://cdn.discordapp.com/embed/avatars/0.png`)
                     .replace(/{url}/gi, invites.filter(x => !x.temporary && x.channel.type == 'text').random().url)
                     .replace(/{color}/gi, rgbToHex(color[0], color[1], color[2]))
+                    .replace(/{code}/gi, req.url!.substr(1))
                 );
             });
             return;
@@ -195,6 +196,7 @@ const server = http.createServer(async (req, res) => {
                     .replace(/{guild_icon}/gi, client.guilds.cache.get((await client.db!.findOne({url: parsed.pathname!.substr(1)}))._id)!.iconURL() || 'https://cdn.discordapp.com/embed/avatars/0.png')
                     .replace(/{url}/gi, inv.url)
                     .replace(/{color}/gi, rgbToHex(color[0], color[1], color[2]))
+                    .replace(/{code}/gi, req.url!.substr(1))
                 )
             });
         });
