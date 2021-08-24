@@ -49,9 +49,6 @@ export default {
         }
     },
     snow2unix: (snowflake: string): number => {
-        const bin = (Number(snowflake) >>> 0).toString(2);
-        const snowts = Number(bin.substr(0, 42));
-        const unixts = (snowts >> 22) + 1420070400000;
-        return unixts;
+        return Number(snowflake) / 4194304 + 1420070400000
     }
 }

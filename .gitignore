@@ -358,3 +358,6 @@ MigrationBackup/
 # Database files
 db/index.db
 db/
+
+# Build results
+dist
