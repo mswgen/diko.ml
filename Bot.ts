@@ -4,8 +4,8 @@ export default class Bot extends Discord.Client {
     public commands: Discord.Collection <string, ClientCommands>;
     public db: mongodb.Document | undefined;
     public devs: Array<string>;
-    constructor (...args: Array<any>) {
-        super (...args);
+    constructor (options: Discord.ClientOptions) {
+        super (options);
         this.commands = new Discord.Collection();
         this.db = undefined;
         this.devs = ['647736678815105037'];

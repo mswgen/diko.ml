@@ -4,7 +4,13 @@ import dotenv from 'dotenv';
 import url from 'url';
 import fs from 'fs';
 import Bot from './Bot';
-const client = new Bot();
+const client = new Bot({
+    ws: {
+        properties: {
+            $browser: 'Discord Android'
+        }
+    }
+});
 import os from 'os';
 import axios from 'axios';
 import ascii from 'ascii-table';
