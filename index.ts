@@ -89,15 +89,15 @@ client.on('ready', () => {
         axios.get('https://diko.ml').then();
     }, 600000)
     setInterval(() => {
-        axios.post(`https://koreanbots.dev/api/v2/bots/${client.user!.id}/stats`, {
+        axios.post(`https://koreanbots.dev/api/v2/bots/${client.user!.id}/stats`, JSON.stringify({
             servers: client.guilds.cache.size
-        }, {
+        }), {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: process.env.KOREANBOTS
+                'Authorization': process.env.KOREANBOTS
             }
         });
-    }, 120000);
+    }, 180000);
 });
 client.on('guildDelete', async guild => {
     if ((await client.db?.findOne({_id: guild.id}))) {
